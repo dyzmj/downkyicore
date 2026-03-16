@@ -29,6 +29,12 @@
   - macOS: ~/Library/Application Support/DownKyi/Media
   - linux: ~/.config/DownKyi/Media
 
+## 赞助
+
+如果这个项目对您有很大帮助，并且您希望支持该项目的开发和维护，请随时扫描一下二维码进行捐赠。非常感谢您的捐款，谢谢！
+
+![Alipay.png](https://s3.bzdrs.cn/downkyi/img/AliPay.png)![WeChat.png](https://s3.bzdrs.cn/downkyi/img/WechatPay.jpg)
+
 ## 免责申明
 1. 本软件只提供视频解析，不提供任何资源上传、存储到服务器的功能。
 2. 本软件仅解析来自B站的内容，不会对解析到的音视频进行二次编码，部分视频会进行有限的格式转换、拼接等操作。
