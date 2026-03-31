@@ -1,4 +1,4 @@
-﻿namespace DownKyi.Core.Settings;
+namespace DownKyi.Core.Settings;
 
 public partial class SettingsManager
 {
@@ -39,7 +39,6 @@ public partial class SettingsManager
     /// <returns></returns>
     public AllowStatus GetDanmakuTopFilter()
     {
-        _appSettings = GetSettings();
         if (_appSettings.Danmaku.DanmakuTopFilter == AllowStatus.None)
         {
             // 第一次获取，先设置默认值
@@ -69,7 +68,6 @@ public partial class SettingsManager
     /// <returns></returns>
     public AllowStatus GetDanmakuBottomFilter()
     {
-        _appSettings = GetSettings();
         if (_appSettings.Danmaku.DanmakuBottomFilter == AllowStatus.None)
         {
             // 第一次获取，先设置默认值
@@ -99,7 +97,6 @@ public partial class SettingsManager
     /// <returns></returns>
     public AllowStatus GetDanmakuScrollFilter()
     {
-        _appSettings = GetSettings();
         if (_appSettings.Danmaku.DanmakuScrollFilter == AllowStatus.None)
         {
             // 第一次获取，先设置默认值
@@ -129,7 +126,6 @@ public partial class SettingsManager
     /// <returns></returns>
     public AllowStatus GetIsCustomDanmakuResolution()
     {
-        _appSettings = GetSettings();
         if (_appSettings.Danmaku.IsCustomDanmakuResolution == AllowStatus.None)
         {
             // 第一次获取，先设置默认值
@@ -159,7 +155,6 @@ public partial class SettingsManager
     /// <returns></returns>
     public int GetDanmakuScreenWidth()
     {
-        _appSettings = GetSettings();
         if (_appSettings.Danmaku.DanmakuScreenWidth == -1)
         {
             // 第一次获取，先设置默认值
@@ -189,7 +184,6 @@ public partial class SettingsManager
     /// <returns></returns>
     public int GetDanmakuScreenHeight()
     {
-        _appSettings = GetSettings();
         if (_appSettings.Danmaku.DanmakuScreenHeight == -1)
         {
             // 第一次获取，先设置默认值
@@ -219,7 +213,6 @@ public partial class SettingsManager
     /// <returns></returns>
     public string GetDanmakuFontName()
     {
-        _appSettings = GetSettings();
         if (_appSettings.Danmaku.DanmakuFontName == null)
         {
             // 第一次获取，先设置默认值
@@ -249,7 +242,6 @@ public partial class SettingsManager
     /// <returns></returns>
     public int GetDanmakuFontSize()
     {
-        _appSettings = GetSettings();
         if (_appSettings.Danmaku.DanmakuFontSize == -1)
         {
             // 第一次获取，先设置默认值
@@ -279,7 +271,6 @@ public partial class SettingsManager
     /// <returns></returns>
     public int GetDanmakuLineCount()
     {
-        _appSettings = GetSettings();
         if (_appSettings.Danmaku.DanmakuLineCount == -1)
         {
             // 第一次获取，先设置默认值
@@ -309,7 +300,6 @@ public partial class SettingsManager
     /// <returns></returns>
     public DanmakuLayoutAlgorithm GetDanmakuLayoutAlgorithm()
     {
-        _appSettings = GetSettings();
         if (_appSettings.Danmaku.DanmakuLayoutAlgorithm == DanmakuLayoutAlgorithm.None)
         {
             // 第一次获取，先设置默认值

@@ -1,4 +1,4 @@
-﻿// using DownKyi.Core.Aria2cNet.Server;
+// using DownKyi.Core.Aria2cNet.Server;
 
 using System.Net;
 using DownKyi.Core.Aria2cNet.Server;
@@ -68,7 +68,6 @@ namespace DownKyi.Core.Settings
         /// <returns></returns>
         public AllowStatus GetIsLiftingOfRegion()
         {
-            _appSettings = GetSettings();
             if (_appSettings.Network.IsLiftingOfRegion == AllowStatus.None)
             {
                 // 第一次获取，先设置默认值
@@ -98,7 +97,6 @@ namespace DownKyi.Core.Settings
         /// <returns></returns>
         public AllowStatus GetUseSsl()
         {
-            _appSettings = GetSettings();
             if (_appSettings.Network.UseSsl == AllowStatus.None)
             {
                 // 第一次获取，先设置默认值
@@ -128,7 +126,6 @@ namespace DownKyi.Core.Settings
         /// <returns></returns>
         public string GetUserAgent()
         {
-            _appSettings = GetSettings();
             if (_appSettings.Network.UserAgent == string.Empty)
             {
                 // 第一次获取，先设置默认值
@@ -158,7 +155,6 @@ namespace DownKyi.Core.Settings
         /// <returns></returns>
         public Downloader GetDownloader()
         {
-            _appSettings = GetSettings();
             if (_appSettings.Network.Downloader != Downloader.NotSet) return _appSettings.Network.Downloader;
             // 第一次获取，先设置默认值
             SetDownloader(Downloader);
@@ -184,7 +180,6 @@ namespace DownKyi.Core.Settings
         /// <returns></returns>
         public NetworkProxy GetNetworkProxy()
         {
-            _appSettings = GetSettings();
             if (_appSettings.Network.NetworkProxy != NetworkProxy.None) return _appSettings.Network.NetworkProxy;
             SetNetworkProxy(NetworkProxy);
             return NetworkProxy;
@@ -205,7 +200,6 @@ namespace DownKyi.Core.Settings
 
         public string GetCustomProxy()
         {
-            _appSettings = GetSettings();
             if (_appSettings.Network.NetworkProxy == NetworkProxy.Custom && !string.IsNullOrEmpty(_appSettings.Network.CustomNetworkProxy))
                 return _appSettings.Network.CustomNetworkProxy;
             // 第一次获取，先设置默认值
@@ -235,7 +229,6 @@ namespace DownKyi.Core.Settings
         /// <returns></returns>
         public int GetMaxCurrentDownloads()
         {
-            _appSettings = GetSettings();
             if (_appSettings.Network.MaxCurrentDownloads != -1) return _appSettings.Network.MaxCurrentDownloads;
             // 第一次获取，先设置默认值
             SetMaxCurrentDownloads(MaxCurrentDownloads);
@@ -261,7 +254,6 @@ namespace DownKyi.Core.Settings
         /// <returns></returns>
         public int GetSplit()
         {
-            _appSettings = GetSettings();
             if (_appSettings.Network.Split != -1) return _appSettings.Network.Split;
             // 第一次获取，先设置默认值
             SetSplit(Split);
@@ -287,7 +279,6 @@ namespace DownKyi.Core.Settings
         /// <returns></returns>
         public AllowStatus GetIsHttpProxy()
         {
-            _appSettings = GetSettings();
             if (_appSettings.Network.IsHttpProxy != AllowStatus.None) return _appSettings.Network.IsHttpProxy;
             // 第一次获取，先设置默认值
             SetIsHttpProxy(IsHttpProxy);
@@ -313,7 +304,6 @@ namespace DownKyi.Core.Settings
         /// <returns></returns>
         public string GetHttpProxy()
         {
-            _appSettings = GetSettings();
             if (_appSettings.Network.HttpProxy != null) return _appSettings.Network.HttpProxy;
             // 第一次获取，先设置默认值
             SetHttpProxy(_httpProxy);
@@ -339,7 +329,6 @@ namespace DownKyi.Core.Settings
         /// <returns></returns>
         public int GetHttpProxyListenPort()
         {
-            _appSettings = GetSettings();
             if (_appSettings.Network.HttpProxyListenPort != -1) return _appSettings.Network.HttpProxyListenPort;
             // 第一次获取，先设置默认值
             SetHttpProxyListenPort(HttpProxyListenPort);
@@ -365,7 +354,6 @@ namespace DownKyi.Core.Settings
         /// <returns></returns>
         public string GetAriaToken()
         {
-            _appSettings = GetSettings();
             if (_appSettings.Network.AriaToken == null)
             {
                 // 第一次获取，先设置默认值
@@ -395,7 +383,6 @@ namespace DownKyi.Core.Settings
         /// <returns></returns>
         public string GetAriaHost()
         {
-            _appSettings = GetSettings();
             if (_appSettings.Network.AriaHost == null)
             {
                 // 第一次获取，先设置默认值
@@ -425,7 +412,6 @@ namespace DownKyi.Core.Settings
         /// <returns></returns>
         public int GetAriaListenPort()
         {
-            _appSettings = GetSettings();
             if (_appSettings.Network.AriaListenPort == -1)
             {
                 // 第一次获取，先设置默认值
@@ -455,7 +441,6 @@ namespace DownKyi.Core.Settings
         /// <returns></returns>
         public AriaConfigLogLevel GetAriaLogLevel()
         {
-            _appSettings = GetSettings();
             if (_appSettings.Network.AriaLogLevel == AriaConfigLogLevel.NOT_SET)
             {
                 // 第一次获取，先设置默认值
@@ -485,7 +470,6 @@ namespace DownKyi.Core.Settings
         /// <returns></returns>
         public int GetAriaSplit()
         {
-            _appSettings = GetSettings();
             if (_appSettings.Network.AriaSplit == -1)
             {
                 // 第一次获取，先设置默认值
@@ -515,7 +499,6 @@ namespace DownKyi.Core.Settings
         /// <returns></returns>
         public int GetAriaMaxOverallDownloadLimit()
         {
-            _appSettings = GetSettings();
             if (_appSettings.Network.AriaMaxOverallDownloadLimit == -1)
             {
                 // 第一次获取，先设置默认值
@@ -545,7 +528,6 @@ namespace DownKyi.Core.Settings
         /// <returns></returns>
         public int GetAriaMaxDownloadLimit()
         {
-            _appSettings = GetSettings();
             if (_appSettings.Network.AriaMaxDownloadLimit == -1)
             {
                 // 第一次获取，先设置默认值
@@ -575,7 +557,6 @@ namespace DownKyi.Core.Settings
         /// <returns></returns>
         public AriaConfigFileAllocation GetAriaFileAllocation()
         {
-            _appSettings = GetSettings();
             if (_appSettings.Network.AriaFileAllocation == AriaConfigFileAllocation.NOT_SET)
             {
                 // 第一次获取，先设置默认值
@@ -605,7 +586,6 @@ namespace DownKyi.Core.Settings
         /// <returns></returns>
         public AllowStatus GetIsAriaHttpProxy()
         {
-            _appSettings = GetSettings();
             if (_appSettings.Network.IsAriaHttpProxy == AllowStatus.None)
             {
                 // 第一次获取，先设置默认值
@@ -635,7 +615,6 @@ namespace DownKyi.Core.Settings
         /// <returns></returns>
         public string GetAriaHttpProxy()
         {
-            _appSettings = GetSettings();
             if (_appSettings.Network.AriaHttpProxy == null)
             {
                 // 第一次获取，先设置默认值
@@ -665,7 +644,6 @@ namespace DownKyi.Core.Settings
         /// <returns></returns>
         public int GetAriaHttpProxyListenPort()
         {
-            _appSettings = GetSettings();
             if (_appSettings.Network.AriaHttpProxyListenPort == -1)
             {
                 // 第一次获取，先设置默认值

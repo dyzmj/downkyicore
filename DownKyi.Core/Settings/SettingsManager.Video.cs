@@ -1,4 +1,4 @@
-﻿using DownKyi.Core.FileName;
+using DownKyi.Core.FileName;
 using DownKyi.Core.Settings.Models;
 using DownKyi.Core.Storage;
 
@@ -64,7 +64,6 @@ public partial class SettingsManager
     /// <returns></returns>
     public int GetVideoCodecs()
     {
-        _appSettings = GetSettings();
         if (_appSettings.Video.VideoCodecs == -1)
         {
             // 第一次获取，先设置默认值
@@ -94,7 +93,6 @@ public partial class SettingsManager
     /// <returns></returns>
     public int GetQuality()
     {
-        _appSettings = GetSettings();
         if (_appSettings.Video.Quality == -1)
         {
             // 第一次获取，先设置默认值
@@ -124,7 +122,6 @@ public partial class SettingsManager
     /// <returns></returns>
     public int GetAudioQuality()
     {
-        _appSettings = GetSettings();
         if (_appSettings.Video.AudioQuality == -1)
         {
             // 第一次获取，先设置默认值
@@ -154,7 +151,6 @@ public partial class SettingsManager
     /// <returns></returns>
     public int GetVideoParseType()
     {
-        _appSettings = GetSettings();
         if (_appSettings.Video.VideoParseType == null)
         {
             // 第一次获取，先设置默认值
@@ -184,7 +180,6 @@ public partial class SettingsManager
     /// <returns></returns>
     public AllowStatus GetIsTranscodingFlvToMp4()
     {
-        _appSettings = GetSettings();
         if (_appSettings.Video.IsTranscodingFlvToMp4 == AllowStatus.None)
         {
             // 第一次获取，先设置默认值
@@ -214,7 +209,6 @@ public partial class SettingsManager
     /// <returns></returns>
     public AllowStatus GetIsTranscodingAacToMp3()
     {
-        _appSettings = GetSettings();
         if (_appSettings.Video.IsTranscodingAacToMp3 == AllowStatus.None)
         {
             // 第一次获取，先设置默认值
@@ -244,7 +238,6 @@ public partial class SettingsManager
     /// <returns></returns>
     public string GetSaveVideoRootPath()
     {
-        _appSettings = GetSettings();
         if (_appSettings.Video.SaveVideoRootPath == null)
         {
             // 第一次获取，先设置默认值
@@ -274,7 +267,6 @@ public partial class SettingsManager
     /// <returns></returns>
     public List<string> GetHistoryVideoRootPaths()
     {
-        _appSettings = GetSettings();
         if (_appSettings.Video.HistoryVideoRootPaths == null)
         {
             // 第一次获取，先设置默认值
@@ -304,7 +296,6 @@ public partial class SettingsManager
     /// <returns></returns>
     public AllowStatus GetIsUseSaveVideoRootPath()
     {
-        _appSettings = GetSettings();
         if (_appSettings.Video.IsUseSaveVideoRootPath == AllowStatus.None)
         {
             // 第一次获取，先设置默认值
@@ -334,7 +325,6 @@ public partial class SettingsManager
     /// <returns></returns>
     public VideoContentSettings GetVideoContent()
     {
-        _appSettings = GetSettings();
         if (_appSettings.Video.VideoContent == null)
         {
             // 第一次获取，先设置默认值
@@ -364,7 +354,6 @@ public partial class SettingsManager
     /// <returns></returns>
     public List<FileNamePart> GetFileNameParts()
     {
-        _appSettings = GetSettings();
         if (_appSettings.Video.FileNameParts == null || _appSettings.Video.FileNameParts.Count == 0)
         {
             // 第一次获取，先设置默认值
@@ -394,7 +383,6 @@ public partial class SettingsManager
     /// <returns></returns>
     public string GetFileNamePartTimeFormat()
     {
-        _appSettings = GetSettings();
         if (_appSettings.Video.FileNamePartTimeFormat == null ||
             _appSettings.Video.FileNamePartTimeFormat == string.Empty)
         {
@@ -425,7 +413,6 @@ public partial class SettingsManager
     /// <returns></returns>
     public OrderFormat GetOrderFormat()
     {
-        _appSettings = GetSettings();
         if (_appSettings.Video.OrderFormat == OrderFormat.NotSet)
         {
             // 第一次获取，先设置默认值

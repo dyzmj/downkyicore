@@ -1,4 +1,4 @@
-﻿namespace DownKyi.Core.Settings;
+namespace DownKyi.Core.Settings;
 
 public partial class SettingsManager
 {
@@ -28,7 +28,6 @@ public partial class SettingsManager
 
     public ThemeMode GetThemeMode()
     {
-        _appSettings = GetSettings();
         if (_appSettings.Basic.ThemeMode == ThemeMode.Default)
         {
             // 第一次获取，先设置默认值
@@ -53,7 +52,6 @@ public partial class SettingsManager
     /// <returns></returns>
     public AfterDownloadOperation GetAfterDownloadOperation()
     {
-        _appSettings = GetSettings();
         if (_appSettings.Basic.AfterDownload == AfterDownloadOperation.NotSet)
         {
             // 第一次获取，先设置默认值
@@ -83,7 +81,6 @@ public partial class SettingsManager
     /// <returns></returns>
     public AllowStatus GetIsListenClipboard()
     {
-        _appSettings = GetSettings();
         if (_appSettings.Basic.IsListenClipboard == AllowStatus.None)
         {
             // 第一次获取，先设置默认值
@@ -113,7 +110,6 @@ public partial class SettingsManager
     /// <returns></returns>
     public AllowStatus GetIsAutoParseVideo()
     {
-        _appSettings = GetSettings();
         if (_appSettings.Basic.IsAutoParseVideo == AllowStatus.None)
         {
             // 第一次获取，先设置默认值
@@ -143,7 +139,6 @@ public partial class SettingsManager
     /// <returns></returns>
     public ParseScope GetParseScope()
     {
-        _appSettings = GetSettings();
         if (_appSettings.Basic.ParseScope == ParseScope.NotSet)
         {
             // 第一次获取，先设置默认值
@@ -173,7 +168,6 @@ public partial class SettingsManager
     /// <returns></returns>
     public AllowStatus GetIsAutoDownloadAll()
     {
-        _appSettings = GetSettings();
         if (_appSettings.Basic.IsAutoDownloadAll == AllowStatus.None)
         {
             // 第一次获取，先设置默认值
@@ -203,7 +197,6 @@ public partial class SettingsManager
     /// <returns></returns>
     public DownloadFinishedSort GetDownloadFinishedSort()
     {
-        _appSettings = GetSettings();
         if (_appSettings.Basic.DownloadFinishedSort == DownloadFinishedSort.NotSet)
         {
             // 第一次获取，先设置默认值
@@ -233,7 +226,6 @@ public partial class SettingsManager
     /// <returns></returns>
     public RepeatDownloadStrategy GetRepeatDownloadStrategy()
     {
-        _appSettings = GetSettings();
         if (_appSettings.Basic.RepeatDownloadStrategy == RepeatDownloadStrategy.Ask)
         {
             // 第一次获取，先设置默认值
@@ -263,7 +255,6 @@ public partial class SettingsManager
     /// <returns></returns>
     public bool IsRepeatFileAutoAddNumberSuffix()
     {
-        _appSettings = GetSettings();
         if (_appSettings.Basic.RepeatFileAutoAddNumberSuffix == false)
         {
             // 第一次获取，先设置默认值

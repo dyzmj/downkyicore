@@ -244,6 +244,8 @@ public partial class App : PrismApplication
 
     private void OnExit(object sender, ControlledApplicationLifetimeExitEventArgs e)
     {
+        // 强制落盘设置（防止防抖延迟期间退出导致配置丢失）
+        SettingsManager.GetInstance().Flush();
         // 关闭下载服务
         _downloadService?.End();
     }

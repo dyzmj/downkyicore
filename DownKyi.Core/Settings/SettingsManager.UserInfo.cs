@@ -1,4 +1,4 @@
-﻿using DownKyi.Core.Settings.Models;
+using DownKyi.Core.Settings.Models;
 
 namespace DownKyi.Core.Settings;
 
@@ -19,7 +19,6 @@ public partial class SettingsManager
     /// <returns></returns>
     public UserInfoSettings GetUserInfo()
     {
-        _appSettings = GetSettings();
         if (_appSettings.UserInfo == null)
         {
             // 第一次获取，先设置默认值

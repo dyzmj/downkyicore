@@ -1,4 +1,4 @@
-﻿namespace DownKyi.Core.Settings;
+namespace DownKyi.Core.Settings;
 
 public partial class SettingsManager
 {
@@ -14,7 +14,6 @@ public partial class SettingsManager
     /// <returns></returns>
     public AllowStatus GetIsReceiveBetaVersion()
     {
-        _appSettings = GetSettings();
         if (_appSettings.About.IsReceiveBetaVersion == AllowStatus.None)
         {
             // 第一次获取，先设置默认值
@@ -44,7 +43,6 @@ public partial class SettingsManager
     /// <returns></returns>
     public AllowStatus GetAutoUpdateWhenLaunch()
     {
-        _appSettings = GetSettings();
         if (_appSettings.About.AutoUpdateWhenLaunch == AllowStatus.None)
         {
             // 第一次获取，先设置默认值

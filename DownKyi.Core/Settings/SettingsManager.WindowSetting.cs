@@ -1,4 +1,4 @@
-﻿using DownKyi.Core.Settings.Models;
+using DownKyi.Core.Settings.Models;
 
 namespace DownKyi.Core.Settings;
 
@@ -8,7 +8,6 @@ public partial class SettingsManager
 
     public WindowSettings GetWindowSettings()
     {
-        _appSettings = GetSettings();
         if (_appSettings.WindowSettings == null)
         {
             // 第一次获取，先设置默认值
