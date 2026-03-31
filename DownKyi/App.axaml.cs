@@ -12,6 +12,7 @@ using Avalonia.Threading;
 using DownKyi.Core.Logging;
 using DownKyi.Core.Settings;
 using DownKyi.Core.Storage;
+using DownKyi.Core.Utils;
 using DownKyi.Models;
 using DownKyi.PrismExtension.Dialog;
 using DownKyi.Services.Download;
@@ -30,7 +31,6 @@ using DownKyi.Views.Friends;
 using DownKyi.Views.Settings;
 using DownKyi.Views.Toolbox;
 using DownKyi.Views.UserSpace;
-using FreeSql;
 using Prism.DryIoc;
 using Prism.Ioc;
 using ViewSeasonsSeries = DownKyi.Views.ViewSeasonsSeries;
@@ -66,17 +66,14 @@ public partial class App : PrismApplication
 #endif
 
         AvaloniaXamlLoader.Load(this);
-        Dispatcher.UIThread.UnhandledException += (_, e) =>
-        {
-            LogManager.Error("[Program crash]",e.Exception);
-        };
-        
+        Dispatcher.UIThread.UnhandledException += (_, e) => { LogManager.Error("[Program crash]", e.Exception); };
+
         AppDomain.CurrentDomain.UnhandledException += (_, e) =>
         {
             var exception = e.ExceptionObject as Exception;
-            LogManager.Error("[Program crash]",exception!);
+            LogManager.Error("[Program crash]", exception!);
         };
-        
+
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             desktop.Exit += OnExit!;
@@ -88,33 +85,7 @@ public partial class App : PrismApplication
 
     protected override void RegisterTypes(IContainerRegistry containerRegistry)
     {
-        containerRegistry.RegisterSingleton<IFreeSql>(() =>
-        {
-            var freeSql = new FreeSqlBuilder()
-                .UseConnectionString(DataType.Sqlite, $"Data Source={StorageManager.GetDbPath()}")
-                .UseAdoConnectionPool(true)
-#if DEBUG
-                .UseMonitorCommand(cmd => Console.WriteLine($"Sql：{cmd.CommandText}"))
-#endif
-                .Build();
-            freeSql.UseJsonMap();
-            return freeSql;
-        });
         containerRegistry.RegisterSingleton<DownloadStorageService>();
-        containerRegistry.RegisterScoped<IBaseRepository<Downloading>>(cp =>
-        {
-            var freeSql = (IFreeSql)cp.Resolve(typeof(IFreeSql));
-            var downloadingRepository = freeSql.GetRepository<Downloading>();
-            downloadingRepository.DbContextOptions.EnableCascadeSave = true;
-            return downloadingRepository;
-        });
-        containerRegistry.RegisterScoped<IBaseRepository<Downloaded>>(cp =>
-        {
-            var freeSql = (IFreeSql)cp.Resolve(typeof(IFreeSql));
-            var downloadRepository = freeSql.GetRepository<Downloaded>();
-            downloadRepository.DbContextOptions.EnableCascadeSave = true;
-            return downloadRepository;
-        });
 
         containerRegistry.RegisterSingleton<MainWindow>();
         containerRegistry.RegisterSingleton<IDialogService, DialogService>();
@@ -182,8 +153,7 @@ public partial class App : PrismApplication
             return Container.Resolve<MainWindow>();
         }
 
-        Container.Resolve<IFreeSql>().CodeFirst.SyncStructure(typeof(DownloadBase), typeof(Downloaded), typeof(Downloading));
-        // 下载数据存储服务
+        // 下载数据存储服务（内部完成建表 DDL）
         var downloadStorageService = Container.Resolve<DownloadStorageService>();
 
         // 从数据库读取

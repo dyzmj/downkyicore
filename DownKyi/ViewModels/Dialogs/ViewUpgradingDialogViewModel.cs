@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Formats.Nrbf;
@@ -12,7 +12,7 @@ using DownKyi.Core.BiliApi.Login;
 using DownKyi.Core.Storage;
 using DownKyi.Core.Storage.Database;
 using DownKyi.Models;
-using FreeSql;
+using DownKyi.Services.Download;
 using Microsoft.Data.Sqlite;
 using Prism.Commands;
 using Prism.Services.Dialogs;
@@ -22,7 +22,7 @@ namespace DownKyi.ViewModels.Dialogs;
 public class ViewUpgradingDialogViewModel : BaseDialogViewModel
 {
     public const string Tag = "DialogLoading";
-    private readonly IBaseRepository<Downloaded> _downloadedRepository;
+    private readonly DownloadStorageService _downloadStorageService;
 
     #region 页面属性申明
 
@@ -70,9 +70,9 @@ public class ViewUpgradingDialogViewModel : BaseDialogViewModel
 
     #endregion
 
-    public ViewUpgradingDialogViewModel(IBaseRepository<Downloaded> downloadedRepository)
+    public ViewUpgradingDialogViewModel(DownloadStorageService downloadStorageService)
     {
-        _downloadedRepository = downloadedRepository;
+        _downloadStorageService = downloadStorageService;
         Message = "数据迁移中、请不要关闭软件";
     }
 
@@ -80,7 +80,7 @@ public class ViewUpgradingDialogViewModel : BaseDialogViewModel
     {
         Dispatcher.UIThread.InvokeAsync(() => Message = message);
     }
-    
+
     private async Task SetImportantMessage(string message, int delayMs = 1500)
     {
         Dispatcher.UIThread.Invoke(() => Message = message);
@@ -94,7 +94,7 @@ public class ViewUpgradingDialogViewModel : BaseDialogViewModel
 
     private void Upgrade()
     {
-         Task.Run(Upgrade1_0_20To1_0_21);
+        Task.Run(Upgrade1_0_20To1_0_21);
     }
 
 #pragma warning disable SYSLIB5005
@@ -146,14 +146,14 @@ public class ViewUpgradingDialogViewModel : BaseDialogViewModel
         }
 
 
-        string[] possibleDatabasePaths = 
+        string[] possibleDatabasePaths =
         {
             StorageManager.GetDownload(),
             StorageManager.GetDownload().Replace(".db", "_debug.db")
         };
-        
+
         var oldDbPath = possibleDatabasePaths.FirstOrDefault(File.Exists);
-        
+
         if (oldDbPath != null)
         {
             await SetImportantMessage("正在迁移下载信息");
@@ -253,7 +253,7 @@ public class ViewUpgradingDialogViewModel : BaseDialogViewModel
             }
             catch (Exception ex)
             {
-                await  SetImportantMessage($"发生未知错误: {ex.Message}");
+                await SetImportantMessage($"发生未知错误: {ex.Message}");
                 dbHelper?.Dispose();
                 await HandleFailedDatabase(oldDbPath);
                 Dispatcher.UIThread.Invoke(() => RaiseRequestClose(new DialogResult()));
@@ -400,7 +400,7 @@ public class ViewUpgradingDialogViewModel : BaseDialogViewModel
                             downloadedList.Add(download);
                             processedCount++;
                             if (processedCount % batchSize != 0 && processedCount != totalCount) continue;
-                            _downloadedRepository.Insert(downloadedList);
+                            _downloadStorageService.AddDownloadedBatch(downloadedList);
                             downloadedList.Clear();
 
                             // 更新进度
@@ -483,7 +483,7 @@ public class ViewUpgradingDialogViewModel : BaseDialogViewModel
             }
             catch
             {
-                await SetImportantMessage("无法处理数据库文件，请手动删除",3000);
+                await SetImportantMessage("无法处理数据库文件，请手动删除", 3000);
             }
         }
     }

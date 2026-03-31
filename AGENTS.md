@@ -27,7 +27,7 @@
 
 - **Avalonia 11** — 跨平台 XAML UI（Windows、Linux、macOS）
 - **Prism.DryIoc.Avalonia** — MVVM 框架、依赖注入、导航、发布/订阅事件
-- **FreeSql** — SQLite 存储 ORM（下载队列、历史记录）
+- **Microsoft.Data.Sqlite** — SQLite 原生 SQL 存储（下载队列、历史记录）
 - **FFMpegCore** — 音视频混流
 - **Downloader** — 内置 HTTP 下载引擎
 - **Newtonsoft.Json** — 设置项与 API 响应的序列化
@@ -67,7 +67,7 @@ DownKyi/
 │   ├── Services/                   ← IInfoService、IDownloadService 抽象
 │   │   └── Download/               ← DownloadService 及内置/Aria 实现
 │   ├── Events/                     ← Prism PubSubEvent<T> 定义
-│   ├── Models/                     ← FreeSql ORM 实体
+│   ├── Models/                     ← 数据库实体（纯 POCO，无 ORM 注解）
 │   ├── PrismExtension/             ← 自定义异步 IDialogService 扩展
 │   └── Utils/                      ← DictionaryResource（国际化）
 │
