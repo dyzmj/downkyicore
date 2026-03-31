@@ -13,6 +13,28 @@ namespace DownKyi.Core.BiliApi.Login
         // 本地位置
         private static readonly string LocalLoginInfo = StorageManager.GetLogin();
 
+        // 内存缓存：读多写少，使用 ReaderWriterLockSlim 保证线程安全
+        private static readonly ReaderWriterLockSlim CacheLock = new();
+        private static List<DownKyiCookie>? _cachedCookies;
+        private static string? _cachedCookieString;
+
+        /// <summary>
+        /// 使缓存失效，在写操作完成后调用
+        /// </summary>
+        private static void InvalidateCache()
+        {
+            CacheLock.EnterWriteLock();
+            try
+            {
+                _cachedCookies = null;
+                _cachedCookieString = null;
+            }
+            finally
+            {
+                CacheLock.ExitWriteLock();
+            }
+        }
+
         /// <summary>
         /// 保存登录的cookies到文件
         /// </summary>
@@ -48,77 +70,127 @@ namespace DownKyi.Core.BiliApi.Login
                     LogManager.Error(e);
                     return false;
                 }
-            }
+                finally
+                {
+                    if (File.Exists(tempFile))
+                    {
+                        File.Delete(tempFile);
+                    }
+                }
 
-            if (File.Exists(tempFile))
+                // 写入成功后使缓存立即失效
+                InvalidateCache();
+            }
+            else
             {
-                File.Delete(tempFile);
+                if (File.Exists(tempFile))
+                {
+                    File.Delete(tempFile);
+                }
             }
 
             return isSucceed;
         }
 
-
         /// <summary>
-        /// 获得登录的cookies
+        /// 获得登录的cookies，结果会被缓存到内存中，直到下次写操作使缓存失效
         /// </summary>
         /// <returns></returns>
         public static List<DownKyiCookie> GetLoginInfoCookies()
         {
-            var tempFile = LocalLoginInfo + "-" + Guid.NewGuid().ToString("N");
-
-            if (File.Exists(LocalLoginInfo))
+            // 先尝试从缓存读取
+            CacheLock.EnterReadLock();
+            try
             {
+                if (_cachedCookies != null)
+                {
+                    return _cachedCookies;
+                }
+            }
+            finally
+            {
+                CacheLock.ExitReadLock();
+            }
+
+            // 缓存未命中，从磁盘加载
+            CacheLock.EnterWriteLock();
+            try
+            {
+                // 双重检查：可能其他线程已完成加载
+                if (_cachedCookies != null)
+                {
+                    return _cachedCookies;
+                }
+
+                if (!File.Exists(LocalLoginInfo))
+                {
+                    return new List<DownKyiCookie>();
+                }
+
+                List<DownKyiCookie>? cookies;
                 try
                 {
-                    File.Copy(LocalLoginInfo, tempFile, true);
+                    // 直接读取文件，用 FileShare.Read 避免独占锁，无需临时文件
+                    using var stream = new FileStream(LocalLoginInfo, FileMode.Open, FileAccess.Read, FileShare.Read);
+                    cookies = ObjectHelper.ReadCookiesFromStream(stream)?.Select(cookie =>
+                    {
+                        cookie.Value = HttpUtility.UrlEncode(cookie.Value);
+                        return cookie;
+                    }).ToList();
                 }
                 catch (Exception e)
                 {
                     Console.PrintLine("GetLoginInfoCookies()发生异常: {0}", e);
                     LogManager.Error(e);
-                    if (File.Exists(tempFile))
-                    {
-                        File.Delete(tempFile);
-                    }
-
                     return new List<DownKyiCookie>();
                 }
-            }
-            else
-            {
-                return new List<DownKyiCookie>();
-            }
 
-            var cookies = ObjectHelper.ReadCookiesFromDisk(tempFile)?.Select(cookie =>
-            {
-                cookie.Value = HttpUtility.UrlEncode(cookie.Value);
-                return cookie;
-            }).ToList();
+                _cachedCookies = cookies ?? new List<DownKyiCookie>();
+                // 同步更新字符串缓存
+                _cachedCookieString = _cachedCookies.Count > 0
+                    ? string.Join("; ", _cachedCookies.Select(item => $"{item.Name}={item.Value}"))
+                    : "";
 
-            if (File.Exists(tempFile))
-            {
-                File.Delete(tempFile);
+                return _cachedCookies;
             }
-
-            return cookies ?? new List<DownKyiCookie>();
+            finally
+            {
+                CacheLock.ExitWriteLock();
+            }
         }
 
         /// <summary>
-        /// 返回登录信息的cookies的字符串
+        /// 返回登录信息的cookies的字符串，结果会被缓存到内存中，直到下次写操作使缓存失效
         /// </summary>
         /// <returns></returns>
         public static string GetLoginInfoCookiesString()
         {
-            var cookies = GetLoginInfoCookies();
-            if (cookies.Count == 0)
+            // 先尝试从字符串缓存读取
+            CacheLock.EnterReadLock();
+            try
             {
-                return "";
+                if (_cachedCookieString != null)
+                {
+                    return _cachedCookieString;
+                }
+            }
+            finally
+            {
+                CacheLock.ExitReadLock();
             }
 
-            var cookie = string.Join("; ", cookies.Select(item => $"{item.Name}={item.Value}"));
+            // 字符串缓存未命中时，触发完整加载（GetLoginInfoCookies 内部会同步填充字符串缓存）
+            GetLoginInfoCookies();
 
-            return cookie;
+            CacheLock.EnterReadLock();
+            try
+            {
+                return _cachedCookieString ?? "";
+            }
+            finally
+            {
+                CacheLock.ExitReadLock();
+            }
         }
 
         /// <summary>
@@ -131,6 +203,9 @@ namespace DownKyi.Core.BiliApi.Login
             try
             {
                 File.Delete(LocalLoginInfo);
+
+                // 注销后使缓存立即失效
+                InvalidateCache();
 
                 SettingsManager.GetInstance().SetUserInfo(new UserInfoSettings
                 {

@@ -1,8 +1,10 @@
-﻿using DownKyi.Core.Logging;
-using System.Text.Json;
+﻿using System.Text;
+using DownKyi.Core.Logging;
 using System.Web;
 using DownKyi.Core.Storage;
+using Newtonsoft.Json;
 using Console = DownKyi.Core.Utils.Debugging.Console;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace DownKyi.Core.Utils;
 
@@ -106,6 +108,39 @@ public static class ObjectHelper
         catch (Exception e)
         {
             Console.PrintLine("ReadObjectFromDisk()发生异常: {0}", e);
+            LogManager.Error(e);
+            return null;
+        }
+    }
+
+    /// <summary>
+    /// 从已打开的流中读取cookie
+    /// </summary>
+    /// <param name="stream"></param>
+    /// <returns></returns>
+    public static List<DownKyiCookie>? ReadCookiesFromStream(Stream stream)
+    {
+        try
+        {
+            if (stream.CanSeek)
+            {
+                stream.Seek(0, SeekOrigin.Begin);
+            }
+
+            using var streamReader = new StreamReader(stream, Encoding.UTF8);
+            var str = streamReader.ReadToEnd();
+            Console.PrintLine("Reading object from stream... ");
+            return JsonConvert.DeserializeObject<List<DownKyiCookie>>(str);
+        }
+        catch (IOException e)
+        {
+            Console.PrintLine("ReadCookiesFromStream()发生IO异常: {0}", e);
+            LogManager.Error(e);
+            return null;
+        }
+        catch (Exception e)
+        {
+            Console.PrintLine("ReadCookiesFromStream()发生异常: {0}", e);
             LogManager.Error(e);
             return null;
         }
