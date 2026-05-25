@@ -1,0 +1,525 @@
+# Instincts generated from https://github.com/dyzmj/downkyicore
+# Generated: 2026-04-01T16:48:28.148Z
+# Version: 2.0
+# NOTE: This file supplements (does not replace) any existing curated instincts.
+# High-confidence manually curated instincts should be preserved alongside these.
+
+---
+id: downkyicore-commit-conventional
+trigger: "when writing a commit message"
+confidence: 0.85
+domain: git
+source: repo-analysis
+source_repo: https://github.com/dyzmj/downkyicore
+---
+
+# Downkyicore Commit Conventional
+
+## Action
+
+Use conventional commit format with prefixes: fix, chore, feat, refactor
+
+## Evidence
+
+- 200 commits analyzed
+- Detected conventional commit pattern
+- Examples: chore(release): prepare for 1.0.24, fix: 优化登录信息读取
+
+---
+id: downkyicore-commit-length
+trigger: "when writing a commit message"
+confidence: 0.6
+domain: git
+source: repo-analysis
+source_repo: https://github.com/dyzmj/downkyicore
+---
+
+# Downkyicore Commit Length
+
+## Action
+
+Keep commit messages concise (~28 characters)
+
+## Evidence
+
+- Average commit message length: 28 chars
+- Based on 200 commits
+
+---
+id: downkyicore-naming-files
+trigger: "when creating a new file"
+confidence: 0.8
+domain: code-style
+source: repo-analysis
+source_repo: https://github.com/dyzmj/downkyicore
+---
+
+# Downkyicore Naming Files
+
+## Action
+
+Use PascalCase naming convention
+
+## Evidence
+
+- Analyzed file naming patterns in repository
+- Dominant pattern: PascalCase
+
+---
+id: downkyicore-import-relative
+trigger: "when importing modules"
+confidence: 0.75
+domain: code-style
+source: repo-analysis
+source_repo: https://github.com/dyzmj/downkyicore
+---
+
+# Downkyicore Import Relative
+
+## Action
+
+Use relative imports for project files
+
+## Evidence
+
+- Import analysis shows relative import pattern
+- Example: import { x } from '../lib/x'
+
+---
+id: downkyicore-export-style
+trigger: "when exporting from a module"
+confidence: 0.7
+domain: code-style
+source: repo-analysis
+source_repo: https://github.com/dyzmj/downkyicore
+---
+
+# Downkyicore Export Style
+
+## Action
+
+Prefer named exports
+
+## Evidence
+
+- Export pattern analysis
+- Dominant style: named
+
+---
+id: downkyicore-test-separate
+trigger: "when writing tests"
+confidence: 0.8
+domain: testing
+source: repo-analysis
+source_repo: https://github.com/dyzmj/downkyicore
+---
+
+# Downkyicore Test Separate
+
+## Action
+
+Place tests in the tests/ or __tests__/ directory, mirroring src structure
+
+## Evidence
+
+- Separate test directory pattern detected
+- Tests live in dedicated test folders
+
+---
+id: downkyicore-workflow-refactoring
+trigger: "when refactoring code"
+confidence: 0.6
+domain: workflow
+source: repo-analysis
+source_repo: https://github.com/dyzmj/downkyicore
+---
+
+# Downkyicore Workflow Refactoring
+
+## Action
+
+Follow the refactoring workflow:
+1. Ensure tests pass before refactor
+2. Refactor code structure
+3. Verify tests still pass
+
+## Evidence
+
+- Workflow detected from commit patterns
+- Frequency: ~2x per month
+- Files: src/**/*
+
+---
+id: downkyicore-workflow-release-version-bump
+trigger: "when doing release version bump"
+confidence: 0.55
+domain: workflow
+source: repo-analysis
+source_repo: https://github.com/dyzmj/downkyicore
+---
+
+# Downkyicore Workflow Release Version Bump
+
+## Action
+
+Follow the release-version-bump workflow:
+1. Update CHANGELOG.md with new changes.
+2. Update DownKyi/Models/AppInfo.cs with new version info.
+3. Update script/macos/Info.plist for macOS packaging.
+4. Update version.txt with the new version number.
+
+## Evidence
+
+- Workflow detected from commit patterns
+- Frequency: ~1x per month
+- Files: CHANGELOG.md, DownKyi/Models/AppInfo.cs, script/macos/Info.plist
+
+---
+id: downkyicore-workflow-avalonia-dependency-update
+trigger: "when doing avalonia dependency update"
+confidence: 0.55
+domain: workflow
+source: repo-analysis
+source_repo: https://github.com/dyzmj/downkyicore
+---
+
+# Downkyicore Workflow Avalonia Dependency Update
+
+## Action
+
+Follow the avalonia-dependency-update workflow:
+1. Update Directory.Packages.props with new Avalonia version.
+2. Optionally update README.md or other related files.
+
+## Evidence
+
+- Workflow detected from commit patterns
+- Frequency: ~1x per month
+- Files: Directory.Packages.props, README.md
+
+---
+id: downkyicore-workflow-fix-bug-single-feature
+trigger: "when doing fix bug single feature"
+confidence: 0.65
+domain: workflow
+source: repo-analysis
+source_repo: https://github.com/dyzmj/downkyicore
+---
+
+# Downkyicore Workflow Fix Bug Single Feature
+
+## Action
+
+Follow the fix-bug-single-feature workflow:
+1. Identify the problematic file(s).
+2. Apply the fix or optimization.
+3. Commit with a 'fix:' message.
+
+## Evidence
+
+- Workflow detected from commit patterns
+- Frequency: ~3x per month
+- Files: DownKyi.Core/BiliApi/Login/LoginHelper.cs, DownKyi.Core/BiliApi/WebClient.cs, DownKyi/Utils/ClipboardListener.cs
+
+---
+id: downkyicore-workflow-settings-manager-update
+trigger: "when doing settings manager update"
+confidence: 0.55
+domain: workflow
+source: repo-analysis
+source_repo: https://github.com/dyzmj/downkyicore
+---
+
+# Downkyicore Workflow Settings Manager Update
+
+## Action
+
+Follow the settings-manager-update workflow:
+1. Edit one or more SettingsManager.*.cs files.
+2. Update DownKyi/App.axaml.cs if needed.
+3. Commit with a 'fix:' or 'chore:' message.
+
+## Evidence
+
+- Workflow detected from commit patterns
+- Frequency: ~1x per month
+- Files: DownKyi.Core/Settings/SettingsManager.About.cs, DownKyi.Core/Settings/SettingsManager.Basic.cs, DownKyi.Core/Settings/SettingsManager.Danmaku.cs
+
+---
+id: downkyicore-workflow-ci-pipeline-update
+trigger: "when doing ci pipeline update"
+confidence: 0.55
+domain: workflow
+source: repo-analysis
+source_repo: https://github.com/dyzmj/downkyicore
+---
+
+# Downkyicore Workflow Ci Pipeline Update
+
+## Action
+
+Follow the ci-pipeline-update workflow:
+1. Edit .github/workflows/build.yml or related scripts.
+2. Edit packaging/signing scripts as needed.
+3. Commit with a 'ci:' message.
+
+## Evidence
+
+- Workflow detected from commit patterns
+- Frequency: ~1x per month
+- Files: .github/workflows/build.yml, script/macos/package.sh, script/macos/sign.sh
+
+---
+id: downkyicore-instinct-file-naming
+trigger: "When creating or renaming a file."
+confidence: 0.9
+domain: code-style
+source: repo-analysis
+source_repo: dyzmj/downkyicore
+---
+
+# Downkyicore Instinct File Naming
+
+## Action
+
+Use PascalCase for file names.
+
+## Evidence
+
+- Pattern in files: DownKyi/App.axaml.cs, DownKyi/Services/Download/AriaDownloadService.cs
+
+---
+id: downkyicore-instinct-function-naming
+trigger: "When defining a function or method."
+confidence: 0.85
+domain: code-style
+source: repo-analysis
+source_repo: dyzmj/downkyicore
+---
+
+# Downkyicore Instinct Function Naming
+
+## Action
+
+Use camelCase for function names.
+
+## Evidence
+
+- Pattern in code: function names in DownKyi.Core/BiliApi/Login/LoginHelper.cs
+
+---
+id: downkyicore-instinct-class-naming
+trigger: "When defining a class."
+confidence: 0.9
+domain: code-style
+source: repo-analysis
+source_repo: dyzmj/downkyicore
+---
+
+# Downkyicore Instinct Class Naming
+
+## Action
+
+Use PascalCase for class names.
+
+## Evidence
+
+- Pattern in files: DownKyi/Services/Download/DownloadService.cs
+
+---
+id: downkyicore-instinct-constant-naming
+trigger: "When defining a constant."
+confidence: 0.8
+domain: code-style
+source: repo-analysis
+source_repo: dyzmj/downkyicore
+---
+
+# Downkyicore Instinct Constant Naming
+
+## Action
+
+Use SCREAMING_SNAKE_CASE for constant names.
+
+## Evidence
+
+- Pattern in code: constants in DownKyi.Core/Settings/SettingsManager.cs
+
+---
+id: downkyicore-instinct-import-style
+trigger: "When importing modules or namespaces."
+confidence: 0.8
+domain: code-style
+source: repo-analysis
+source_repo: dyzmj/downkyicore
+---
+
+# Downkyicore Instinct Import Style
+
+## Action
+
+Use relative imports.
+
+## Evidence
+
+- Pattern in code: using statements in DownKyi.Core/BiliApi/WebClient.cs
+
+---
+id: downkyicore-instinct-export-style
+trigger: "When exporting classes or functions."
+confidence: 0.8
+domain: code-style
+source: repo-analysis
+source_repo: dyzmj/downkyicore
+---
+
+# Downkyicore Instinct Export Style
+
+## Action
+
+Use named exports.
+
+## Evidence
+
+- Pattern in code: public class declarations in DownKyi/Services/Download/CustomAriaDownloadService.cs
+
+---
+id: downkyicore-instinct-commit-format
+trigger: "When making a git commit."
+confidence: 0.95
+domain: git
+source: repo-analysis
+source_repo: dyzmj/downkyicore
+---
+
+# Downkyicore Instinct Commit Format
+
+## Action
+
+Use Conventional Commits format: <type>: <description> (type in [fix|chore|feat|refactor|ci]).
+
+## Evidence
+
+- Seen in commit: fix: 优化登录信息读取
+- Pattern in commit examples
+
+---
+id: downkyicore-instinct-release-version-bump
+trigger: "When preparing for a new release version."
+confidence: 0.99
+domain: workflow
+source: repo-analysis
+source_repo: dyzmj/downkyicore
+---
+
+# Downkyicore Instinct Release Version Bump
+
+## Action
+
+Update CHANGELOG.md, DownKyi/Models/AppInfo.cs, script/macos/Info.plist, and version.txt with new version info.
+
+## Evidence
+
+- Workflow: release-version-bump
+- Files: CHANGELOG.md, DownKyi/Models/AppInfo.cs, script/macos/Info.plist, version.txt
+
+---
+id: downkyicore-instinct-avalonia-dependency-update
+trigger: "When upgrading the Avalonia UI library version."
+confidence: 0.95
+domain: workflow
+source: repo-analysis
+source_repo: dyzmj/downkyicore
+---
+
+# Downkyicore Instinct Avalonia Dependency Update
+
+## Action
+
+Update Directory.Packages.props with new Avalonia version and optionally update README.md.
+
+## Evidence
+
+- Workflow: avalonia-dependency-update
+- Files: Directory.Packages.props, README.md
+
+---
+id: downkyicore-instinct-fix-bug-single-feature
+trigger: "When a bug is found in a specific feature or utility."
+confidence: 0.8
+domain: workflow
+source: repo-analysis
+source_repo: dyzmj/downkyicore
+---
+
+# Downkyicore Instinct Fix Bug Single Feature
+
+## Action
+
+Identify the problematic file(s), apply the fix, and commit with a 'fix:' message.
+
+## Evidence
+
+- Workflow: fix-bug-single-feature
+- Seen in commit: fix: 优化settingsManager
+
+---
+id: downkyicore-instinct-settings-manager-update
+trigger: "When changing or optimizing settings logic or adding new settings."
+confidence: 0.85
+domain: workflow
+source: repo-analysis
+source_repo: dyzmj/downkyicore
+---
+
+# Downkyicore Instinct Settings Manager Update
+
+## Action
+
+Edit one or more SettingsManager.*.cs files, update DownKyi/App.axaml.cs if needed, and commit with a 'fix:' or 'chore:' message.
+
+## Evidence
+
+- Workflow: settings-manager-update
+- Files: DownKyi.Core/Settings/SettingsManager.*.cs, DownKyi/App.axaml.cs
+
+---
+id: downkyicore-instinct-ci-pipeline-update
+trigger: "When changing build, packaging, or deployment logic."
+confidence: 0.9
+domain: workflow
+source: repo-analysis
+source_repo: dyzmj/downkyicore
+---
+
+# Downkyicore Instinct Ci Pipeline Update
+
+## Action
+
+Edit .github/workflows/build.yml or related scripts, edit packaging/signing scripts as needed, and commit with a 'ci:' message.
+
+## Evidence
+
+- Workflow: ci-pipeline-update
+- Files: .github/workflows/build.yml, script/macos/package.sh, script/macos/sign.sh
+
+---
+id: downkyicore-instinct-refactor-workflow
+trigger: "When refactoring code."
+confidence: 0.8
+domain: workflow
+source: repo-analysis
+source_repo: dyzmj/downkyicore
+---
+
+# Downkyicore Instinct Refactor Workflow
+
+## Action
+
+Ensure tests pass before and after refactor, then commit with a 'refactor:' message.
+
+## Evidence
+
+- Workflow: refactoring
+- Seen in commit: refactor: 实现ImmutableObservableCollection解决枚举时集合修改问题 (#384)
+
